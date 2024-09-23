@@ -2,24 +2,39 @@
 <%- include('partials/navbar.ejs') %>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
     body {
-        background-color: #f0f2f5; /* Fundo suave */
+        background-color: #111111; /* Fundo preto elegante */
+        font-family: 'Montserrat', sans-serif; /* Fonte estilosa */
+        color: #f5f5f5; /* Cor de texto branco */
     }
+    
     .card {
-        background: rgba(255, 255, 255, 0.9); /* Fundo do card com transparência */
-        border-radius: 10px; /* Bordas arredondadas */
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra leve */
-        margin-top: 2rem; /* Espaçamento superior */
+        background: #222; /* Fundo cinza escuro */
+        border-radius: 5px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra leve */
+        margin: 0.5rem; /* Espaçamento entre os cards */
         padding: 1rem; /* Espaçamento interno */
+        flex: 1 1 calc(25% - 1rem); /* Flexibilidade dos cards */
     }
+
     .card img {
-        width: 30px; /* Tamanho da imagem */
-        border-radius: 50%; /* Imagem redonda */
+        width: 100%; /* Tamanho da imagem ocupando todo o card */
+        height: auto; /* Altura automática para manter proporções */
+        border-radius: 5px; /* Bordas arredondadas */
     }
+
     .product-container {
         display: flex; /* Usar flexbox para disposição */
         flex-wrap: wrap; /* Permitir que os cards se movam para a linha de baixo */
         justify-content: space-between; /* Espaçar os cards */
+    }
+
+    h1 {
+        margin-top: 2rem; /* Margem superior */
+        text-align: center; /* Centralizar título */
+        color: #ff6600; /* Cor do título laranja */
     }
 </style>
 
@@ -27,12 +42,12 @@
     <h1 class="h5">Produtos</h1>
     <div class="product-container">
         <% produtos.forEach(produto => { %>
-        <div class="card" style="flex: 1 1 calc(25% - 1rem); margin: 0.5rem;">
+        <div class="card">
             <div class="card-body">
-                <img src="imgs/product.png" alt="Produto">
-                <h5><%= produto.nome %></h5>
-                <p>Preço: <%= produto.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></p>
-                <p>Categoria: <%= produto.categoria %></p>
+                <img src="<%= produto.imagem %>" alt="<%= produto.nome %>"> <!-- Usando a imagem do array -->
+                <h5 class="text-light mt-4"><%= produto.nome %></h5>
+                <p class="text-light">Preço: <%= produto.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></p>
+                <p class="text-light">Categoria: <%= produto.categoria %></p>
             </div>
         </div>
         <% }) %>

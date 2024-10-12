@@ -1,5 +1,5 @@
-<%- include('partials/header.ejs') %>
-<%- include('partials/navbar.ejs') %>
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/navbar.ejs') %>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
@@ -9,64 +9,131 @@
         font-family: 'Montserrat', sans-serif; /* Fonte estilosa */
         color: #f5f5f5; /* Cor de texto branco */
     }
-    
+
     .card {
         background: #222; /* Fundo cinza escuro */
-        border-radius: 5px;
+        border-radius: 10px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra leve */
-        padding: 1.5rem;
-        margin-top: 2rem; /* Espaçamento superior */
+        margin-top: 2rem;
     }
 
     .card-header {
         background-color: #ff6600; /* Cabeçalho laranja */
         color: white;
-        border-radius: 5px 5px 0 0;
+        border-radius: 10px 10px 0 0;
         padding: 1rem;
+        text-align: center; /* Centraliza o título */
+    }
+
+    .form-control {
+        background-color: #333; /* Fundo do input mais escuro */
+        border: 1px solid #555; /* Borda cinza */
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem; /* Espaço entre os campos */
+        color: #f5f5f5;
+        font-size: 1rem;
+        width: 100%; /* Ocupa toda a largura */
+    }
+
+    .form-control::placeholder {
+        color: #aaa; /* Placeholder mais claro */
+    }
+
+    .form-control:focus {
+        border-color: #ff6600; /* Borda laranja ao focar */
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 102, 0, 0.5); /* Efeito de foco */
+    }
+
+    .btn-success {
+        background-color: #ff6600; /* Cor laranja */
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%; /* Ocupa a largura total */
+    }
+
+    .btn-success:hover {
+        background-color: #e65c00; /* Tom mais escuro ao passar o mouse */
     }
 
     table {
-        width: 100%; /* Tabela ocupa toda a largura do card */
-        border-collapse: collapse; /* Colapsa as bordas */
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #f5f5f5;
     }
+
     th, td {
-        padding: 1rem; /* Espaçamento interno */
-        text-align: left; /* Alinhamento à esquerda */
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #555; /* Linha divisória mais escura */
+        font-size: 14px;
     }
+
     th {
-        background-color: #343a40; /* Cabeçalho escuro */
-        color: white; /* Texto branco */
+        background-color: #333; /* Cabeçalho cinza escuro */
+        color: white;
+        font-weight: 500;
     }
-    tr:hover {
-        background-color: rgba(255, 102, 0, 0.2); /* Efeito de hover nas linhas */
+
+    a {
+        text-decoration: none;
+        color: #ff9800;
     }
-    img {
-        width: 30px; /* Tamanho da imagem */
-        border-radius: 50%; /* Imagem redonda */
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    hr {
+        border-color: #555; /* Cor mais escura para o divisor */
     }
 </style>
 
-<div class="container mt-4">
+<div class="container">
     <div class="card">
         <div class="card-header">
-            <h1 class="h5">Pedidos</h1>
+            <h1>Cadastrar Pedido</h1>
+        </div>
+
+        <div class="card-body">
+            <form action="/pedidos/new" method="post">
+                <input type="text" name="numero" id="numero" placeholder="Numero do pedido" class="form-control" required>
+                <input type="text" name="valor" id="valor" placeholder="Valor do pedido" class="form-control" required>
+                <input type="submit" class="btn btn-success" value="Cadastrar">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Pedidos</h1>
         </div>
         <div class="card-body">
             <table>
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>Número:</th>
-                        <th>Valor:</th>
+                        <th>Numero Pedido</th>
+                        <th>Valor</th>
+                        <th colspan="2">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% pedidos.forEach(pedido => { %>
-                    <tr>
-                        <td style="filter: invert();"><img src="imgs/order.png" alt="Pedido"></td>
-                        <td class="text-light"><%= pedido.numero %></td>
-                        <td class="text-light"><%= pedido.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></td>
-                    </tr>
+                    <% pedidos.forEach(pedido => { %> 
+                        <tr>
+                            <td><%= pedido.numero %></td>
+                            <td><%= pedido.valor %></td>
+                            <td><a href="/pedidos/edit/<%= pedido.id %>" style="color:#ff9800">Editar</a></td>
+                            <td><a href="/pedidos/delete/<%= pedido.id %>" style="color:#f44336">Deletar</a></td>
+                        </tr>
                     <% }) %>
                 </tbody>
             </table>
@@ -74,4 +141,4 @@
     </div>
 </div>
 
-<%- include('partials/footer.ejs') %>
+<%- include ('partials/footer.ejs') %>

@@ -9,48 +9,134 @@
         font-family: 'Montserrat', sans-serif; /* Fonte estilosa */
         color: #f5f5f5; /* Cor de texto branco */
     }
-    
+
     .card {
         background: #222; /* Fundo cinza escuro */
-        border-radius: 5px;
+        border-radius: 10px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra leve */
-        margin: 0.5rem; /* Espaçamento entre os cards */
-        padding: 1rem; /* Espaçamento interno */
-        flex: 1 1 calc(25% - 1rem); /* Flexibilidade dos cards */
+        margin-top: 2rem;
     }
 
-    .card img {
-        width: 100%; /* Tamanho da imagem ocupando todo o card */
-        height: auto; /* Altura automática para manter proporções */
-        border-radius: 5px; /* Bordas arredondadas */
+    .card-header {
+        background-color: #ff6600; /* Cabeçalho laranja */
+        color: white;
+        border-radius: 10px 10px 0 0;
+        padding: 1rem;
+        text-align: center; /* Centraliza o título */
     }
 
-    .product-container {
-        display: flex; /* Usar flexbox para disposição */
-        flex-wrap: wrap; /* Permitir que os cards se movam para a linha de baixo */
-        justify-content: space-between; /* Espaçar os cards */
+    .form-control {
+        background-color: #333; /* Fundo do input mais escuro */
+        border: 1px solid #555; /* Borda cinza */
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem; /* Espaço entre os campos */
+        color: #f5f5f5;
+        font-size: 1rem;
+        width: 100%; /* Ocupa toda a largura */
     }
 
-    h1 {
-        margin-top: 2rem; /* Margem superior */
-        text-align: center; /* Centralizar título */
-        color: #ff6600; /* Cor do título laranja */
+    .form-control::placeholder {
+        color: #aaa; /* Placeholder mais claro */
+    }
+
+    .form-control:focus {
+        border-color: #ff6600; /* Borda laranja ao focar */
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 102, 0, 0.5); /* Efeito de foco */
+    }
+
+    .btn-success {
+        background-color: #ff6600; /* Cor laranja */
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%; /* Ocupa a largura total */
+    }
+
+    .btn-success:hover {
+        background-color: #e65c00; /* Tom mais escuro ao passar o mouse */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #f5f5f5;
+    }
+
+    th, td {
+        padding: 1rem;
+        text-align: left;
+    }
+
+    th {
+        background-color: #444; /* Cor do cabeçalho escura */
+        color: white;
+    }
+
+    tr:hover {
+        background-color: rgba(255, 102, 0, 0.1); /* Efeito de hover nas linhas */
+    }
+
+    a {
+        color: #ff6600;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #cc5200;
     }
 </style>
 
 <div class="container">
-    <h1 class="h5">Produtos</h1>
-    <div class="product-container">
-        <% produtos.forEach(produto => { %>
-        <div class="card">
-            <div class="card-body">
-                <img src="<%= produto.imagem %>" alt="<%= produto.nome %>"> <!-- Usando a imagem do array -->
-                <h5 class="text-light mt-4"><%= produto.nome %></h5>
-                <p class="text-light">Preço: <%= produto.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></p>
-                <p class="text-light">Categoria: <%= produto.categoria %></p>
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <h1>Cadastrar Produto</h1>
         </div>
-        <% }) %>
+
+        <div class="card-body">
+            <form action="/produtos/new" method="post">
+                <input type="text" name="nome" id="nome" placeholder="Nome do produto" class="form-control" required>
+                <input type="text" name="preco" id="preco" placeholder="Preço" class="form-control" required>
+                <input type="text" name="categoria" id="categoria" placeholder="Categoria" class="form-control" required>
+                <input type="submit" class="btn btn-success" value="Cadastrar">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Produtos</h1>
+        </div>
+        <div class="card-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Categoria</th>
+                        <th colspan="2">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% produtos.forEach(produto => { %>
+                        <tr>
+                            <td><%= produto.nome %></td>
+                            <td><%= produto.preco %></td>
+                            <td><%= produto.categoria %></td>
+                            <td><a href="/produtos/edit/<%= produto.id %>" style="color:#ff9800">Editar</a></td>
+                            <td><a href="/produtos/delete/<%= produto.id %>" style="color:#f44336">Deletar</a></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

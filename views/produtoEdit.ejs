@@ -1,0 +1,87 @@
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/navbar.ejs') %>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+        background-color: #111111; /* Fundo preto elegante */
+        font-family: 'Montserrat', sans-serif; /* Fonte estilosa */
+        color: #f5f5f5; /* Cor de texto branco */
+    }
+
+    .card {
+        background: #222; /* Fundo cinza escuro */
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra leve */
+        margin-top: 2rem;
+    }
+
+    .card-header {
+        background-color: #ff6600; /* Cabeçalho laranja */
+        color: white;
+        border-radius: 10px 10px 0 0;
+        padding: 1rem;
+        text-align: center; /* Centraliza o título */
+    }
+
+    .form-control {
+        background-color: #333; /* Fundo do input mais escuro */
+        border: 1px solid #555; /* Borda cinza */
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem; /* Espaço entre os campos */
+        color: #f5f5f5;
+        font-size: 1rem;
+        width: 100%; /* Ocupa toda a largura */
+    }
+
+    .form-control::placeholder {
+        color: #aaa; /* Placeholder mais claro */
+    }
+
+    .form-control:focus {
+        border-color: #ff6600; /* Borda laranja ao focar */
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 102, 0, 0.5); /* Efeito de foco */
+    }
+
+    .btn-warning {
+        background-color: #ff9800; /* Cor laranja */
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%; /* Ocupa a largura total */
+    }
+
+    .btn-warning:hover {
+        background-color: #e68a00; /* Tom mais escuro ao passar o mouse */
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Editar Produto</h1>
+            <hr>
+        </div>
+
+        <div class="card-body">
+            <form action="/produtos/update" method="post">
+                <label>Nome do produto</label>
+                <input class="form-control" type="text" name="nome" id="nome" value="<%= produto.nome %>" required>
+                <label>Preço do produto</label>
+                <input class="form-control" type="text" name="preco" id="preco" value="<%= produto.preco %>" required>
+                <label>Categoria do Produto</label>
+                <input class="form-control" type="text" name="categoria" id="categoria" value="<%= produto.categoria %>" required>
+                <input type="hidden" name="id" value="<%= produto.id %>">
+                <br>
+                <input type="submit" class="btn btn-warning" value="Alterar" onclick="return confirm('Confirma as alterações para o produto <%= produto.nome %>?')">
+            </form>
+        </div>
+    </div>
+</div>

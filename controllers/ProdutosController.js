@@ -1,83 +1,21 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 
-// Importando o model de Cliente
-
-import Produto from "../models/Produto.js";
-
-// ROTA CLIENTES
-router.get("/produtos", function (req, res) {
-  Produto.findAll().then((produtos) => {
+// ROTA PRODUTOS
+router.get("/produtos", function(req, res) {
+    const produtos = [
+        {imagem: "../imgs/shorts.avif", nome: "Shorts Nike Treino 2024", preco: 1200, categoria: "Roupa"},
+        {imagem: "../imgs/celtics.avif", nome: "Camiseta Nike Boston Celtics", preco: 900, categoria: "Roupa"},
+        {imagem: "../imgs/corta_vento.avif", nome: "Capa de Chuva Nike Corinthians 2024", preco: 3200, categoria: "Roupa"},
+        {imagem: "../imgs/regata_nike.avif", nome: "Regata Brooklyn 2024", preco: 150, categoria: "Roupa"},
+        {imagem: "../imgs/corintia.avif", nome: "Camisa Corinthians 2024", preco: 350, categoria: "Roupa"},
+        {imagem: "../imgs/camisa01.avif", nome: "Camisa Nike NBA 2024", preco: 150, categoria: "Roupa"},
+        {imagem: "../imgs/barsa.avif", nome: "Camisa Nike Barcelone", preco: 150, categoria: "Roupa"},
+        {imagem: "../imgs/camisa02.avif", nome: "Camisa Brooklyn Net Masc.", preco: 150, categoria: "Roupa"},
+    ];
     res.render("produtos", {
-      produtos: produtos,
-    });
-  });
-});
-
-// ROTA DE CADASTRO DE PRODUTOS
-
-router.post("/produtos/new", (req, res) => {
-  const nome = req.body.nome;
-  const preco = req.body.preco;
-  const categoria = req.body.categoria;
-
-  Produto.create({
-    nome: nome,
-    preco: preco,
-    categoria: categoria,
-  }).then(() => {
-    res.redirect("/produtos");
-  }).catch((error) => {
-    console.log(error);
-    res.status(500).send("Erro ao cadastrar o produto.");
-  });
-});
-
-
-router.get("/produtos/delete/:id", (req, res) => {
-  const id = req.params.id;
-
-  Produto.destroy({
-    where: {
-      id: id,
-    },
-  })
-    .then(() => {
-      res.redirect("/produtos");
-    })
-    .catch((error) => {
-      console.log(error);
+        produtos: produtos
     });
 });
 
-router.get("/produtos/edit/:id", (req, res) => {
-  const id = req.params.id;
-  Produto.findByPk(id).then((produto) => {
-    res.render("produtoEdit", {
-      produto: produto,
-    });
-  });
-});
-
-router.post("/produtos/update", (req, res) => {
-  const id = req.body.id;
-  const nome = req.body.nome;
-  const preco = req.body.preco;
-  const categoria = req.body.categoria;
-
-  Produto.update(
-    {
-      nome: nome,
-      preco: preco,
-      categoria: categoria,
-    },
-    { where: { id: id } }
-  )
-    .then(() => {
-      res.redirect("/produtos");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
 export default router;

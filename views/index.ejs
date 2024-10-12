@@ -1,124 +1,145 @@
-<%- include ('partials/header.ejs') %>
-<%- include ('partials/navbar.ejs') %>
+<%- include('partials/header.ejs') %>
+<%- include('partials/navbar.ejs') %>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-*{
-    font-family: Poppins;
-}
     body {
-        font-family: 'Montserrat', sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
+        background-color: #111111; /* Fundo preto elegante */
+        font-family: 'Montserrat', sans-serif; /* Fonte estilosa */
+        color: #f5f5f5; /* Cor de texto branco */
     }
-
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
+    
     .jumbotron {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 30px;
-        text-align: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        background: rgba(255, 255, 255, 0.1); /* Fundo translúcido */
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra escura */
+        padding: 2rem;
+        margin-bottom: 2rem;
+        color: #fff; /* Texto branco */
     }
 
-    .jumbotron h1 {
-        font-size: 24px;
-        font-weight: 500;
-        color: #333;
+    .btn-success {
+        background-color: #ff6600; /* Botão laranja vibrante */
+        border-color: #ff6600;
+        transition: background-color 0.3s;
     }
 
-    .lead {
-        font-size: 16px;
-        color: #666;
+    .btn-success:hover {
+        background-color: #cc5200; /* Laranja mais escuro no hover */
     }
 
-    .btn-info {
-        background-color: #007bff;
-        border: none;
+    .card {
+        background: #222; /* Fundo cinza escuro */
+        border-radius: 5px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra leve */
+        padding: 1.5rem;
+    }
+
+    .card-header {
+        background-color: #ff6600; /* Cabeçalho laranja */
         color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 4px;
-        text-transform: uppercase;
-        cursor: pointer;
+        border-radius: 5px 5px 0 0;
+        padding: 1rem;
     }
 
-    .btn-info:hover {
-        background-color: #0069d9;
+    a.text-dark {
+        color: #fff; /* Links brancos */
     }
 
-    .card-header h1 {
-        font-size: 20px;
-        font-weight: 500;
-        color: #333;
+    a.text-dark:hover {
+        color: #ff6600; /* Links laranja ao passar o mouse */
+        text-decoration: none; /* Sem sublinhado */
     }
 
-    ul {
-        list-style-type: none;
-        padding-left: 0;
+    /* Estilos do dashboard */
+    .dashboard {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 2rem;
     }
 
-    ul li {
-        margin: 10px 0;
+    .dashboard-card {
+        background: #333; /* Fundo cinza escuro */
+        border-radius: 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra escura */
+        padding: 2rem;
+        text-align: center;
+        color: #fff;
     }
 
-    ul li a {
-        text-decoration: none;
-        color: #007bff;
-        font-size: 16px;
+    .dashboard-card h3 {
+        margin-bottom: 1.5rem;
+        color: #ff6600; /* Título laranja */
     }
 
-    ul li a:hover {
-        text-decoration: underline;
+    .dashboard-card p {
+        font-size: 1.5rem;
+        font-weight: bold;
     }
 
-    .currentDate {
-        font-size: 14px;
-        color: #888;
-    }
-
-    hr {
-        border-color: #ddd;
+    .dashboard-card:hover {
+        background-color: #444; /* Card mais escuro ao passar o mouse */
     }
 </style>
 
-<div class="container">
+<div class="container mt-4">
     <div class="jumbotron">
-        <h1 class="display-5"><strong>Bem-vindo(a) ao painel administrativo</strong></h1>
-        <p class="lead">Através desse painel é possível listar as tabelas de clientes, produtos e pedidos.</p>
+        <h1 class="display-5"><strong>Painel Verve</strong></h1>
+        <p class="lead">Gerencie seus clientes, produtos e pedidos com eficiência.</p>
         <hr class="my-4">
-        <p class="currentDate"></p>        
         <p class="lead">
-          <a class="btn btn-info btn-lg" href="/pedidos" role="button">Verificar pedidos</a>
+            <a class="btn btn-success btn-lg" href="/pedidos" role="button">Verificar pedidos</a>
         </p>
     </div>
 
-    <hr>
-
     <div class="card">
         <div class="card-header">
-            <h1>Para onde deseja ir?</h1>
+            <h2 class="text-center">Para onde deseja ir?</h2>
         </div>
         <div class="card-body">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/clientes">Clientes</a></li>
-                <li><a href="/produtos">Produtos</a></li>
-                <li><a href="/pedidos">Pedidos</a></li>
+            <ul class="list-unstyled d-flex justify-content-around">
+                <li>
+                    <a href="/" class="btn btn-light text-dark">Home</a>
+                </li>
+                <li>
+                    <a href="/clientes" class="btn btn-light text-dark">Clientes</a>
+                </li>
+                <li>
+                    <a href="/produtos" class="btn btn-light text-dark">Produtos</a>
+                </li>
+                <li>
+                    <a href="/pedidos" class="btn btn-light text-dark">Pedidos</a>
+                </li>
             </ul>
+        </div>
+    </div>
+    
+
+    <!-- Seção do Dashboard -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h3>Vendas por Mês</h3>
+                <p id="vendasPorMes">R$ 0,00</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h3>Valor Total das Vendas</h3>
+                <p id="valorTotalVendas">R$ 0,00</p>
+            </div>
         </div>
     </div>
 </div>
 
-<%- include ('partials/footer.ejs') %>
+<%- include('partials/footer.ejs') %>
+
+<script>
+    const vendasPorMes = 50000;
+    const valorTotalVendas = 200000;
+
+    // Atualizando o dashboard com os valores
+    document.getElementById('vendasPorMes').innerText = `R$ ${vendasPorMes.toLocaleString()}`;
+    document.getElementById('valorTotalVendas').innerText = `R$ ${valorTotalVendas.toLocaleString()}`;
+</script>

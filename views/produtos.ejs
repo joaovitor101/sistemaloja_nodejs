@@ -1,134 +1,57 @@
-<%- include ('partials/header.ejs') %>
-<%- include ('partials/navbar.ejs') %>
+<%- include('partials/header.ejs') %>
+<%- include('partials/navbar.ejs') %>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-*{
-    font-family: Poppins;
-}
     body {
-        font-family: 'Montserrat', sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
+        background-color: #111111; /* Fundo preto elegante */
+        font-family: 'Montserrat', sans-serif; /* Fonte estilosa */
+        color: #f5f5f5; /* Cor de texto branco */
+    }
+    
+    .card {
+        background: #222; /* Fundo cinza escuro */
+        border-radius: 5px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra leve */
+        margin: 0.5rem; /* Espaçamento entre os cards */
+        padding: 1rem; /* Espaçamento interno */
+        flex: 1 1 calc(25% - 1rem); /* Flexibilidade dos cards */
     }
 
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    .card img {
+        width: 100%; /* Tamanho da imagem ocupando todo o card */
+        height: auto; /* Altura automática para manter proporções */
+        border-radius: 5px; /* Bordas arredondadas */
     }
 
-    .card-header h1 {
-        font-size: 24px;
-        margin: 0;
-        font-weight: 500;
-        color: #333;
-        text-align: center;
+    .product-container {
+        display: flex; /* Usar flexbox para disposição */
+        flex-wrap: wrap; /* Permitir que os cards se movam para a linha de baixo */
+        justify-content: space-between; /* Espaçar os cards */
     }
 
-    .form-control {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    .btn-success {
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-    .btn-success:hover {
-        background-color: #45a049;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-        font-size: 14px;
-        color: #555;
-    }
-
-    th {
-        background-color: #f9f9f9;
-        font-weight: 500;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
+    h1 {
+        margin-top: 2rem; /* Margem superior */
+        text-align: center; /* Centralizar título */
+        color: #ff6600; /* Cor do título laranja */
     }
 </style>
 
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h1>Cadastrar Produto</h1>
+    <h1 class="h5">Produtos</h1>
+    <div class="product-container">
+        <% produtos.forEach(produto => { %>
+        <div class="card">
+            <div class="card-body">
+                <img src="<%= produto.imagem %>" alt="<%= produto.nome %>"> <!-- Usando a imagem do array -->
+                <h5 class="text-light mt-4"><%= produto.nome %></h5>
+                <p class="text-light">Preço: <%= produto.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></p>
+                <p class="text-light">Categoria: <%= produto.categoria %></p>
+            </div>
         </div>
-
-        <div class="card-body">
-            <form action="/produtos/new" method="post">
-                <input type="text" name="nome" id="nome" placeholder="Nome do produto" class="form-control" required>
-                <input type="text" name="preco" id="preco" placeholder="Preço" class="form-control" required>
-                <input type="text" name="categoria" id="categoria" placeholder="categoria" class="form-control" required>
-                <input type="submit" class="btn btn-success" value="Cadastrar">
-            </form>
-        </div>
+        <% }) %>
     </div>
 </div>
 
-<div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h1>Produtos</h1>
-        </div>
-        <div class="card-body">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Preço</th>
-                        <th>Categoria</th>
-                        <th colspan="2">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% produtos.forEach(produto => { %>
-                        <tr>
-                            <td><%= produto.nome %></td>
-                            <td><%= produto.preco %></td>
-                            <td><%= produto.categoria %></td>
-                            <td><a href="/produtos/edit/<%= produto.id %>" style="color:#ff9800">Editar</a></td>
-                            <td><a href="/produtos/delete/<%= produto.id %>" style="color:#f44336">Deletar</a></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<%- include ('partials/footer.ejs') %>
+<%- include('partials/footer.ejs') %>

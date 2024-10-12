@@ -2,30 +2,27 @@
 import express from 'express'
 // Iniciando o Express na variável app
 const app = express()
-// Importando o Sequelize (com os dados da conexão)
-import connection from './config/sequelize-config.js'
+
+//Importando o sequelize (com os dados da conexão)
+// import connection from './config/sequelize-config.js'
+
+
 // Importando os Controllers (onde estão as rotas) 
 import ClientesController from "./controllers/ClientesController.js" 
 import ProdutosController from "./controllers/ProdutosController.js" 
 import PedidosController from "./controllers/PedidosController.js" 
 
-// Permite capturar dados vindos de formulários
+// connection.authenticate().then(() =>{
+//     console.log("Conexão com o banco de dados feita com sucesso!");
+// }).catch((error) => {
+//     console.log(error);
+// })
 
-app.use(express.urlencoded({extended: false}))
-
-
-// Realizando a conexão com o banco de dados
-connection.authenticate().then(() => {
-    console.log ("Conexão com o banco de dados feita com sucesso!")
-}).catch((error) => {
-    console.log(error)
-})
-
-connection.query(`create database if not exists loja;`).then(() => {
-    console.log("O banco de dados está criado.")
-}).catch((error) => {
-    console.log(error)
-})
+// connection.query(`CREATE DATABASE IF NOT EXISTS loja`).then(() =>{
+//     console.log("O banco de dados está criado.");
+// }).catch((error) => {
+//     console.log(error);
+// })
 
 // Define o EJS como Renderizador de páginas
 app.set('view engine', 'ejs')
@@ -41,13 +38,15 @@ app.use("/", PedidosController)
 app.get("/",function(req,res){
     res.render("index")
 })
-
+const port = 8080;
 // INICIA O SERVIDOR NA PORTA 8080
-app.listen(8080,function(erro){
-    if(erro) {
-        console.log("Ocorreu um erro!")
+app.listen(8080,function(error){
+    if(error) {
+        console.log(`Ocorreu um erro: ${error}`)
 
     }else{
-        console.log("Servidor iniciado com sucesso!")
+        console.log(`Servidor iniciado com sucesso em http://localhost:${port}`)
     }
 })
+
+
